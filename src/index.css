@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+:root {
     --radius: 0.5rem;
-  }
-  
+}
+
   * {
     @apply border-border;
-  }
-  
-  body {
+}
+
+body {
     @apply bg-background-DEFAULT text-foreground-DEFAULT;
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -21,7 +21,7 @@
 @layer utilities {
   .smooth-transition {
     @apply transition-all duration-300 ease-in-out;
-  }
+}
 }
 
 /* Remove default body centering from Vite template */
