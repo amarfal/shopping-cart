@@ -16,19 +16,19 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
         <img
           src={product.image}
           alt={product.title}
-          className="h-full w-full object-contain p-6 smooth-transition group-hover:scale-105"
+          className="h-full w-full object-contain p-6"
         />
       </div>
 
       {/* Product Info */}
       <div className="space-y-1">
-        <p className="text-sm text-foreground-muted capitalize">
+        <p className="text-sm text-foreground-muted capitalize font-medium">
           {product.category}
         </p>
-        <h3 className="font-medium line-clamp-2 group-hover:text-foreground-muted smooth-transition">
+        <h3 className="font-semibold line-clamp-2 group-hover:text-foreground-muted transition-colors duration-200">
           {product.title}
         </h3>
-        <p className="font-medium">${product.price.toFixed(2)}</p>
+        <p className="font-semibold">${product.price.toFixed(2)}</p>
       </div>
     </article>
   )

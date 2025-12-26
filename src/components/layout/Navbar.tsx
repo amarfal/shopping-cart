@@ -11,18 +11,19 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-background border-b border-border">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="w-full flex h-14 items-center justify-between px-6 sm:px-8 lg:px-12">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-black tracking-tighter">
-          SIKE
+        <Link to="/" className="flex items-center gap-2">
+          <img src="/sike-logo.png" alt="SIKE" className="h-10 w-10" />
+          <span className="heading-display text-3xl tracking-wide">SIKE</span>
         </Link>
 
         {/* Center Navigation */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-8">
           <Link
             to="/"
             className={cn(
-              "text-sm font-medium smooth-transition",
+              "text-base font-semibold smooth-transition",
               isActive("/")
                 ? "text-foreground"
                 : "text-foreground-muted hover:text-foreground"
@@ -33,7 +34,7 @@ export function Navbar() {
           <Link
             to="/shop"
             className={cn(
-              "text-sm font-medium smooth-transition",
+              "text-base font-semibold smooth-transition",
               isActive("/shop")
                 ? "text-foreground"
                 : "text-foreground-muted hover:text-foreground"
