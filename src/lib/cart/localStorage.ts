@@ -1,17 +1,16 @@
-import type { CartItem } from "@/types"
+import type { CartItem } from "@/types";
 
-const CART_STORAGE_KEY = "nike-cart"
+const CART_STORAGE_KEY = "sike-cart";
 
 export function loadCart() {
   try {
-    const stored = localStorage.getItem(CART_STORAGE_KEY)
-    return stored ? (JSON.parse(stored) as CartItem[]) : []
+    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    return stored ? (JSON.parse(stored) as CartItem[]) : [];
   } catch {
-    return []
+    return [];
   }
 }
 
 export function saveCart(items: CartItem[]) {
-  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
 }
-
