@@ -1,5 +1,4 @@
 import type { Product } from "@/types"
-import { Card, CardContent } from "@/components/ui/card"
 
 interface ProductCardProps {
   product: Product
@@ -8,25 +7,29 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onClick }: ProductCardProps) {
   return (
-    <Card
+    <article
       onClick={onClick}
-      className="group cursor-pointer overflow-hidden smooth-transition hover:scale-105 hover:shadow-lg hover:border-primary"
+      className="group cursor-pointer"
     >
-      <div className="aspect-square overflow-hidden bg-white">
+      {/* Image Container */}
+      <div className="aspect-square overflow-hidden bg-background-secondary rounded-lg mb-4">
         <img
           src={product.image}
           alt={product.title}
-          className="h-full w-full object-contain p-4 smooth-transition group-hover:scale-110"
+          className="h-full w-full object-contain p-6 smooth-transition group-hover:scale-105"
         />
       </div>
-      <CardContent className="p-4">
-        <p className="mb-1 text-xs uppercase tracking-wide text-foreground-muted">
+
+      {/* Product Info */}
+      <div className="space-y-1">
+        <p className="text-sm text-foreground-muted capitalize">
           {product.category}
         </p>
-        <h3 className="mb-2 line-clamp-2 text-sm font-medium">{product.title}</h3>
-        <p className="text-lg font-bold">${product.price.toFixed(2)}</p>
-      </CardContent>
-    </Card>
+        <h3 className="font-medium line-clamp-2 group-hover:text-foreground-muted smooth-transition">
+          {product.title}
+        </h3>
+        <p className="font-medium">${product.price.toFixed(2)}</p>
+      </div>
+    </article>
   )
 }
-

@@ -1,12 +1,118 @@
-# React + TypeScript + Vite
+# Sike - Nike-Style Shopping Cart
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern e-commerce shopping cart experience inspired by Nike.com, built with React 19, TypeScript, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Product Catalog** - Browse products from FakeStore API with beautiful product cards
+- **Quick View** - Click any product to see details in a modal overlay
+- **Smart Cart** - Add items to bag with quantity management (max 10 per item)
+- **Live Cart Badge** - Real-time item count in navbar
+- **Persistent Cart** - Cart state saved to localStorage
+- **Responsive Design** - Works seamlessly on mobile, tablet, and desktop
+- **Modern UX** - Smooth transitions, hover effects, and premium feel
 
-## React Compiler
+## 🚀 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Vite 7** - Lightning-fast build tool
+- **React 19.2** - Latest React with modern hooks
+- **TypeScript** - Type-safe development
+- **React Router 7.11** - Client-side routing
+- **Tailwind CSS v4** - Utility-first styling
+- **shadcn/ui** - Beautiful component library
+- **FakeStore API** - Product data source
+
+## 📦 Installation
+
+```bash
+npm install
+```
+
+## 🛠️ Development
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) to view in browser.
+
+## 🏗️ Build
+
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── pages/              # Route pages (Home, Shop, Cart)
+├── components/
+│   ├── layout/         # Navbar
+│   ├── shop/           # Product grid, cards, quick view
+│   ├── cart/           # Cart list, item rows, summary
+│   └── ui/             # shadcn/ui components
+├── providers/          # CartProvider with useReducer
+├── lib/
+│   ├── api/            # FakeStore API integration
+│   ├── cart/           # Cart reducer, selectors, localStorage
+│   └── utils.ts        # Utility functions
+└── types/              # TypeScript interfaces
+```
+
+## 🎨 Design Principles
+
+- **Nike-Inspired** - Clean, bold, modern aesthetic
+- **Dark Theme** - Dark grey background with white text
+- **Light Blue Accent** - Primary actions and hover states
+- **Whitespace** - Generous spacing for clean layout
+- **Premium Feel** - Smooth animations and quality interactions
+
+## 🛒 Cart Features
+
+- Add items from product quick view
+- Increment/decrement quantities in cart
+- Maximum 10 items per product
+- Remove items individually
+- Persistent across page refresh
+- Real-time subtotal and total calculations
+
+## 🔄 State Management
+
+- **useReducer** for cart state (predictable updates)
+- **Context API** for global cart access
+- **localStorage** for persistence
+- **Derived state** for totals (no unnecessary re-renders)
+
+## 📝 API
+
+Products fetched from [FakeStore API](https://fakestoreapi.com/):
+- Simple in-memory caching
+- Error handling with retry option
+- Loading states with skeletons
+
+## 🎯 Key Learning Points
+
+- React 19 modern patterns
+- Type-safe TypeScript
+- useReducer for complex state
+- Custom hooks and providers
+- Responsive design with Tailwind
+- Component composition
+- Performance optimization
+
+## 📄 License
+
+MIT
+
+## 🙏 Credits
+
+- Design inspiration: Nike.com
+- Product data: [FakeStore API](https://fakestoreapi.com/)
+- UI components: [shadcn/ui](https://ui.shadcn.com/)

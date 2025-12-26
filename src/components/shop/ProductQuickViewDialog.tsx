@@ -38,30 +38,32 @@ export function ProductQuickViewDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl">
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="aspect-square overflow-hidden rounded-lg bg-white">
+      <DialogContent>
+        <div className="grid gap-0 md:grid-cols-2">
+          {/* Image */}
+          <div className="aspect-square bg-background-secondary rounded-l-2xl flex items-center justify-center p-8">
             <img
               src={product.image}
               alt={product.title}
-              className="h-full w-full object-contain p-8"
+              className="max-h-full max-w-full object-contain"
             />
           </div>
 
-          <div className="flex flex-col">
-            <DialogHeader className="mb-4">
-              <p className="mb-2 text-sm uppercase tracking-wide text-foreground-muted">
+          {/* Details */}
+          <div className="flex flex-col p-8">
+            <DialogHeader className="mb-6">
+              <p className="text-sm text-foreground-muted capitalize mb-1">
                 {product.category}
               </p>
               <DialogTitle className="text-2xl">{product.title}</DialogTitle>
-              <p className="text-2xl font-bold">${product.price.toFixed(2)}</p>
+              <p className="text-2xl font-bold mt-2">${product.price.toFixed(2)}</p>
             </DialogHeader>
 
-            <DialogDescription className="mb-6 flex-1 text-base text-foreground-muted">
+            <DialogDescription className="flex-1 text-base leading-relaxed mb-8">
               {product.description}
             </DialogDescription>
 
-            <div className="space-y-3">
+            <div className="space-y-3 mt-auto">
               <Button
                 size="lg"
                 className="w-full"
@@ -69,14 +71,14 @@ export function ProductQuickViewDialog({
                 disabled={isAtMaxQuantity}
               >
                 {isAtMaxQuantity
-                  ? "Max Quantity Reached (10)"
+                  ? "Max Quantity Reached"
                   : currentQuantity > 0
                     ? `Add to Bag (${currentQuantity} in bag)`
                     : "Add to Bag"}
               </Button>
-              {isAtMaxQuantity && (
+              {currentQuantity > 0 && !isAtMaxQuantity && (
                 <p className="text-center text-sm text-foreground-muted">
-                  Maximum quantity per item is 10
+                  {currentQuantity} already in your bag
                 </p>
               )}
             </div>
@@ -86,4 +88,3 @@ export function ProductQuickViewDialog({
     </Dialog>
   )
 }
-

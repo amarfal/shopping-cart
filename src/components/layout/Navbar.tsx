@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
-import { ShoppingBag } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Search, ShoppingBag, Menu } from "lucide-react"
 import { useCart } from "@/providers/CartProvider"
 import { cn } from "@/lib/utils"
 
@@ -11,13 +10,15 @@ export function Navbar() {
   const isActive = (path: string) => location.pathname === path
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-gray-800 bg-background">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="text-2xl font-bold tracking-tight">
+    <nav className="sticky top-0 z-50 w-full bg-background border-b border-border">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Logo */}
+        <Link to="/" className="text-2xl font-black tracking-tighter">
           SIKE
         </Link>
 
-        <div className="flex items-center gap-8">
+        {/* Center Navigation */}
+        <div className="hidden md:flex items-center gap-6">
           <Link
             to="/"
             className={cn(
@@ -40,26 +41,29 @@ export function Navbar() {
           >
             Shop
           </Link>
+        </div>
+
+        {/* Right Icons */}
+        <div className="flex items-center gap-3">
+          <button className="p-2 rounded-full hover:bg-background-secondary smooth-transition">
+            <Search className="h-5 w-5" />
+          </button>
           <Link
             to="/cart"
-            className={cn(
-              "relative flex items-center gap-2 text-sm font-medium smooth-transition",
-              isActive("/cart")
-                ? "text-foreground"
-                : "text-foreground-muted hover:text-foreground"
-            )}
+            className="relative p-2 rounded-full hover:bg-background-secondary smooth-transition"
           >
             <ShoppingBag className="h-5 w-5" />
-            <span>Bag</span>
             {totalItemCount > 0 && (
-              <Badge className="absolute -right-3 -top-2 h-5 min-w-5 rounded-full px-1.5">
+              <span className="absolute -top-0.5 -right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white px-1">
                 {totalItemCount}
-              </Badge>
+              </span>
             )}
           </Link>
+          <button className="p-2 rounded-full hover:bg-background-secondary smooth-transition md:hidden">
+            <Menu className="h-5 w-5" />
+          </button>
         </div>
       </div>
     </nav>
   )
 }
-

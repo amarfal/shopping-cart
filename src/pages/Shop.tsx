@@ -59,31 +59,42 @@ export function Shop() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <h1 className="mb-8 text-3xl font-bold">Shop</h1>
-
-      {loading && (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="space-y-4">
-              <Skeleton className="aspect-square w-full" />
-              <Skeleton className="h-4 w-3/4" />
-              <Skeleton className="h-4 w-1/2" />
-            </div>
-          ))}
+    <div className="min-h-screen">
+      {/* Header */}
+      <div className="border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <h1 className="heading-display heading-md">All Products</h1>
+          <p className="mt-2 text-foreground-muted">
+            {!loading && !error && `${products.length} products`}
+          </p>
         </div>
-      )}
+      </div>
 
-      {error && (
-        <div className="flex flex-col items-center justify-center py-12">
-          <p className="mb-4 text-lg text-foreground-muted">{error}</p>
-          <Button onClick={handleRetry}>Retry</Button>
-        </div>
-      )}
+      {/* Content */}
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {loading && (
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="space-y-4">
+                <Skeleton className="aspect-square w-full rounded-lg" />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            ))}
+          </div>
+        )}
 
-      {!loading && !error && products.length > 0 && (
-        <ProductGrid products={products} onProductClick={handleProductClick} />
-      )}
+        {error && (
+          <div className="flex flex-col items-center justify-center py-24">
+            <p className="mb-4 text-lg text-foreground-muted">{error}</p>
+            <Button onClick={handleRetry}>Try Again</Button>
+          </div>
+        )}
+
+        {!loading && !error && products.length > 0 && (
+          <ProductGrid products={products} onProductClick={handleProductClick} />
+        )}
+      </div>
 
       <ProductQuickViewDialog
         product={selectedProduct}
@@ -93,4 +104,3 @@ export function Shop() {
     </div>
   )
 }
-
