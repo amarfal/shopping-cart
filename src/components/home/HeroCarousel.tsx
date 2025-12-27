@@ -35,11 +35,10 @@ export function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const [progress, setProgress] = useState(0)
-  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left')
   const [isAnimating, setIsAnimating] = useState(false)
   const [videosReady, setVideosReady] = useState(false)
   const progressRef = useRef<number>(0)
-  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const intervalRef = useRef<number | null>(null)
   const iframeRefs = useRef<(HTMLIFrameElement | null)[]>([])
 
   const currentVideo = SLIDES[currentSlide]
@@ -73,7 +72,6 @@ export function HeroCarousel() {
 
   const goToNextSlide = useCallback(() => {
     if (isAnimating) return
-    setSlideDirection('left')
     setIsAnimating(true)
     progressRef.current = 0
     setProgress(0)
@@ -86,7 +84,6 @@ export function HeroCarousel() {
 
   const goToPrevSlide = useCallback(() => {
     if (isAnimating) return
-    setSlideDirection('right')
     setIsAnimating(true)
     progressRef.current = 0
     setProgress(0)
@@ -99,7 +96,6 @@ export function HeroCarousel() {
 
   const goToSlide = useCallback((index: number) => {
     if (index === currentSlide || isAnimating) return
-    setSlideDirection(index > currentSlide ? 'left' : 'right')
     setIsAnimating(true)
     progressRef.current = 0
     setProgress(0)

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Search, X } from "lucide-react"
 import { Link } from "react-router-dom"
 import { getProducts } from "@/lib/api/products"
@@ -22,7 +22,6 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
   const [query, setQuery] = useState("")
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
-  const [suggestions, setSuggestions] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -52,11 +51,10 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     }
   }, [isOpen])
 
-  // Filter products and generate suggestions when query changes
+  // Filter products when query changes
   useEffect(() => {
     if (!query.trim()) {
       setFilteredProducts([])
-      setSuggestions([])
       return
     }
 
@@ -70,23 +68,6 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
         p.description.toLowerCase().includes(lowerQuery)
     )
     setFilteredProducts(matches)
-
-    // Generate suggestions from titles
-    const uniqueSuggestions = new Set<string>()
-    matches.forEach((p) => {
-      // Extract words that match
-      const words = p.title.toLowerCase().split(" ")
-      words.forEach((word) => {
-        if (word.includes(lowerQuery) && word.length > 2) {
-          uniqueSuggestions.add(word)
-        }
-      })
-      // Also add category if it matches
-      if (p.category.toLowerCase().includes(lowerQuery)) {
-        uniqueSuggestions.add(p.category.toLowerCase())
-      }
-    })
-    setSuggestions(Array.from(uniqueSuggestions).slice(0, 4))
   }, [query, products])
 
   // Close on escape
