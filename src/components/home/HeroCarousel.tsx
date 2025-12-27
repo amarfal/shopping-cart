@@ -11,6 +11,7 @@ interface Slide {
 
 const PLAYBACK_DURATION = 12 // seconds to show each video
 const START_OFFSET = 3 // seconds into video to start
+const TRANSITION_DURATION = 300 // Faster transitions
 
 const SLIDES: Slide[] = [
   {
@@ -25,7 +26,7 @@ const SLIDES: Slide[] = [
   },
   {
     videoId: "C_BZQkU5Cds",
-    title: "I DID IT",
+    title: "I DID IT.",
     subtitle: "Don't wait for the perfect moment. Create it.",
   }
 ]
@@ -39,6 +40,7 @@ export function HeroCarousel() {
   const [videosReady, setVideosReady] = useState(false)
   const progressRef = useRef<number>(0)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const iframeRefs = useRef<(HTMLIFrameElement | null)[]>([])
 
   const currentVideo = SLIDES[currentSlide]
 
@@ -47,6 +49,27 @@ export function HeroCarousel() {
     const timer = setTimeout(() => setVideosReady(true), 1500)
     return () => clearTimeout(timer)
   }, [])
+
+  // Control video playback via postMessage (YouTube IFrame API)
+  const controlVideo = useCallback((index: number, command: 'playVideo' | 'pauseVideo') => {
+    const iframe = iframeRefs.current[index]
+    if (!iframe?.contentWindow) return
+
+    try {
+      iframe.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: command, args: '' }),
+        'https://www.youtube.com'
+      )
+    } catch (error) {
+      console.warn('Failed to control video:', error)
+    }
+  }, [])
+
+  // Pause/play current video when isPlaying changes
+  useEffect(() => {
+    const command = isPlaying ? 'playVideo' : 'pauseVideo'
+    controlVideo(currentSlide, command)
+  }, [isPlaying, currentSlide, controlVideo])
 
   const goToNextSlide = useCallback(() => {
     if (isAnimating) return
@@ -58,7 +81,7 @@ export function HeroCarousel() {
     setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % SLIDES.length)
       setTimeout(() => setIsAnimating(false), 50)
-    }, 600) // Match CSS transition duration
+    }, TRANSITION_DURATION)
   }, [isAnimating])
 
   const goToPrevSlide = useCallback(() => {
@@ -71,7 +94,7 @@ export function HeroCarousel() {
     setTimeout(() => {
       setCurrentSlide((prev) => (prev - 1 + SLIDES.length) % SLIDES.length)
       setTimeout(() => setIsAnimating(false), 50)
-    }, 600)
+    }, TRANSITION_DURATION)
   }, [isAnimating])
 
   const goToSlide = useCallback((index: number) => {
@@ -84,7 +107,7 @@ export function HeroCarousel() {
     setTimeout(() => {
       setCurrentSlide(index)
       setTimeout(() => setIsAnimating(false), 50)
-    }, 600)
+    }, TRANSITION_DURATION)
   }, [currentSlide, isAnimating])
 
   const togglePlayPause = useCallback(() => {
@@ -128,11 +151,11 @@ export function HeroCarousel() {
     <section className="relative h-[80vh] min-h-[500px] overflow-hidden bg-black">
       {/* Sliding video container */}
       <div 
-        className="absolute inset-0 flex transition-transform duration-600 ease-out"
+        className="absolute inset-0 flex transition-transform ease-out"
         style={{
           width: `${SLIDES.length * 100}%`,
           transform: `translateX(-${(currentSlide * 100) / SLIDES.length}%)`,
-          transitionDuration: isAnimating ? '600ms' : '0ms'
+          transitionDuration: isAnimating ? `${TRANSITION_DURATION}ms` : '0ms'
         }}
       >
         {SLIDES.map((slide, index) => (
@@ -142,7 +165,10 @@ export function HeroCarousel() {
             style={{ width: `${100 / SLIDES.length}%` }}
           >
             <iframe
-              src={`https://www.youtube.com/embed/${slide.videoId}?start=${START_OFFSET}&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&vq=hd1080&hd=1&disablekb=1&fs=0&iv_load_policy=3`}
+              ref={(el) => {
+                iframeRefs.current[index] = el
+              }}
+              src={`https://www.youtube.com/embed/${slide.videoId}?start=${START_OFFSET}&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&vq=hd1080&hd=1&disablekb=1&fs=0&iv_load_policy=3&enablejsapi=1`}
               title={`Hero Video ${index + 1}`}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] min-w-[177.78vh] min-h-[56.25vw] pointer-events-none"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

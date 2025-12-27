@@ -14,8 +14,8 @@ export function Navbar() {
       <div className="w-full flex h-14 items-center justify-between px-6 sm:px-8 lg:px-12">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <img src="/sike-logo.png" alt="SIKE" className="h-10 w-10" />
-          <span className="heading-display text-3xl tracking-wide">SIKE</span>
+          <img src="/sike-logo-removebg-preview.png" alt="Sike" className="h-12 w-12" />
+          <span className="heading-display text-3xl tracking-wide">Sike</span>
         </Link>
 
         {/* Center Navigation */}

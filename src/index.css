@@ -19,19 +19,19 @@
     color: var(--color-foreground);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500; /* Medium weight for body text */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 }
 
 @layer utilities {
   .smooth-transition {
     transition: all 0.2s ease-in-out;
-  }
+}
 
   .bg-background {
     background-color: var(--color-background);
-  }
+}
 
   .bg-background-secondary {
     background-color: var(--color-background-secondary);
@@ -39,7 +39,7 @@
 
   .text-foreground {
     color: var(--color-foreground);
-  }
+}
 
   .text-foreground-muted {
     color: var(--color-foreground-muted);
@@ -55,11 +55,11 @@
 
   .border-border {
     border-color: var(--color-border);
-  }
+}
 
   .border-border-dark {
     border-color: var(--color-border-dark);
-  }
+}
 
   /* Nike-style bold headings - Futura/Bebas Neue */
   .heading-display {
