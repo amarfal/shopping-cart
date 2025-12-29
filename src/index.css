@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Helvetica+Neue:wght@500;700&display=swap");
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Helvetica+Neue:wght@500;700&display=swap');
+
+@custom-variant dark (&:is(.dark *));
 
 @theme {
   /* Nike-inspired light theme */
@@ -11,6 +13,7 @@
   --color-primary-hover: #000000;
   --color-border: #e5e5e5;
   --color-border-dark: #cccccc;
+  --color-success: #128a09;
 }
 
 @layer base {
@@ -19,19 +22,19 @@
     color: var(--color-foreground);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500; /* Medium weight for body text */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 @layer utilities {
   .smooth-transition {
     transition: all 0.2s ease-in-out;
-}
+  }
 
   .bg-background {
     background-color: var(--color-background);
-}
+  }
 
   .bg-background-secondary {
     background-color: var(--color-background-secondary);
@@ -39,7 +42,7 @@
 
   .text-foreground {
     color: var(--color-foreground);
-}
+  }
 
   .text-foreground-muted {
     color: var(--color-foreground-muted);
@@ -53,17 +56,21 @@
     background-color: var(--color-primary-hover);
   }
 
+  .text-success {
+    color: var(--color-success);
+  }
+
   .border-border {
     border-color: var(--color-border);
-}
+  }
 
   .border-border-dark {
     border-color: var(--color-border-dark);
-}
+  }
 
   /* Nike-style bold headings - Futura/Bebas Neue */
   .heading-display {
-    font-family: 'Bebas Neue', 'Futura Bold Condensed', 'Futura', sans-serif;
+    font-family: "Bebas Neue", "Futura Bold Condensed", "Futura", sans-serif;
     font-weight: 700; /* Heavier weight */
     text-transform: uppercase;
     letter-spacing: 0.02em;
@@ -90,5 +97,67 @@
 
   .group-hover\:scale-102:is(:where(.group):hover *) {
     transform: scale(1.02);
+  }
+}
+
+:root {
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+.dark {
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

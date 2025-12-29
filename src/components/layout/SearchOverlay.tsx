@@ -1,12 +1,14 @@
-import { useState, useEffect, useRef } from "react"
-import { Search, X } from "lucide-react"
-import { Link } from "react-router-dom"
-import { getProducts } from "@/lib/api/products"
-import type { Product } from "@/types"
+import { useState, useEffect, useRef } from "react";
+import { Search, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { getProducts } from "@/lib/api/products";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import type { Product } from "@/types";
 
 interface SearchOverlayProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const POPULAR_TERMS = [
@@ -16,97 +18,97 @@ const POPULAR_TERMS = [
   "watches",
   "bags",
   "accessories",
-]
+];
 
 export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
-  const [query, setQuery] = useState("")
-  const [products, setProducts] = useState<Product[]>([])
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const [query, setQuery] = useState("");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Load products on mount
   useEffect(() => {
     async function loadProducts() {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
-        const data = await getProducts()
-        setProducts(data)
+        const data = await getProducts();
+        setProducts(data);
       } catch (error) {
-        console.error("Failed to load products:", error)
+        console.error("Failed to load products:", error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
-    loadProducts()
-  }, [])
+    loadProducts();
+  }, []);
 
   // Focus input when overlay opens
   useEffect(() => {
     if (isOpen && inputRef.current) {
-      setTimeout(() => inputRef.current?.focus(), 100)
+      setTimeout(() => inputRef.current?.focus(), 100);
     }
     if (!isOpen) {
-      setQuery("")
+      setQuery("");
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   // Filter products when query changes
   useEffect(() => {
     if (!query.trim()) {
-      setFilteredProducts([])
-      return
+      setFilteredProducts([]);
+      return;
     }
 
-    const lowerQuery = query.toLowerCase()
-    
+    const lowerQuery = query.toLowerCase();
+
     // Filter products
     const matches = products.filter(
       (p) =>
         p.title.toLowerCase().includes(lowerQuery) ||
         p.category.toLowerCase().includes(lowerQuery) ||
         p.description.toLowerCase().includes(lowerQuery)
-    )
-    setFilteredProducts(matches)
-  }, [query, products])
+    );
+    setFilteredProducts(matches);
+  }, [query, products]);
 
   // Close on escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose()
-    }
+      if (e.key === "Escape") onClose();
+    };
     if (isOpen) {
-      document.addEventListener("keydown", handleEscape)
-      document.body.style.overflow = "hidden"
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
     }
     return () => {
-      document.removeEventListener("keydown", handleEscape)
-      document.body.style.overflow = ""
-    }
-  }, [isOpen, onClose])
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, onClose]);
 
   const handleTermClick = (term: string) => {
-    setQuery(term)
-    inputRef.current?.focus()
-  }
+    setQuery(term);
+    inputRef.current?.focus();
+  };
 
   const clearQuery = () => {
-    setQuery("")
-    inputRef.current?.focus()
-  }
+    setQuery("");
+    inputRef.current?.focus();
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 z-[60] animate-in fade-in duration-200"
+        className="fixed inset-0 bg-black/50 z-60 animate-in fade-in duration-200"
         onClick={onClose}
       />
 
       {/* Overlay Panel */}
-      <div className="fixed top-0 left-0 right-0 bg-white z-[70] shadow-xl animate-in slide-in-from-top duration-300">
+      <div className="fixed top-0 left-0 right-0 bg-background z-70 shadow-xl animate-in slide-in-from-top duration-300">
         {/* Header with search */}
         <div className="flex items-center gap-4 px-6 sm:px-8 lg:px-12 h-16 border-b border-border">
           {/* Logo area spacer */}
@@ -114,7 +116,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
           {/* Search Input */}
           <div className="flex-1 flex items-center gap-3 max-w-3xl mx-auto">
-            <Search className="h-5 w-5 text-foreground-muted flex-shrink-0" />
+            <Search className="h-5 w-5 text-foreground-muted shrink-0" />
             <input
               ref={inputRef}
               type="text"
@@ -124,22 +126,25 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
               className="flex-1 bg-transparent text-lg font-medium placeholder:text-foreground-muted outline-none"
             />
             {query && (
-              <button
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={clearQuery}
-                className="p-1 hover:bg-background-secondary rounded-full transition-colors"
+                className="h-8 w-8"
               >
                 <X className="h-5 w-5" />
-              </button>
+              </Button>
             )}
           </div>
 
           {/* Cancel button */}
-          <button
+          <Button
+            variant="link"
             onClick={onClose}
-            className="text-base font-semibold hover:text-foreground-muted transition-colors"
+            className="text-base font-semibold"
           >
             Cancel
-          </button>
+          </Button>
         </div>
 
         {/* Content */}
@@ -152,13 +157,14 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
               </p>
               <div className="flex flex-wrap gap-3">
                 {POPULAR_TERMS.map((term) => (
-                  <button
+                  <Button
                     key={term}
+                    variant="outline"
                     onClick={() => handleTermClick(term)}
-                    className="px-5 py-2.5 border border-border-dark rounded-full text-sm font-medium hover:border-foreground transition-colors capitalize"
+                    className="capitalize"
                   >
                     {term}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -167,7 +173,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
             <div className="max-w-6xl mx-auto">
               {isLoading ? (
                 <div className="flex items-center justify-center py-12">
-                  <div className="w-8 h-8 border-2 border-foreground-muted border-t-foreground rounded-full animate-spin" />
+                  <Spinner className="w-8 h-8" />
                 </div>
               ) : filteredProducts.length === 0 ? (
                 <p className="text-center text-foreground-muted py-12">
@@ -183,24 +189,28 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                     <ul className="space-y-2">
                       {/* Query itself as first suggestion */}
                       <li>
-                        <button
+                        <Button
+                          variant="link"
                           onClick={() => handleTermClick(query)}
-                          className="text-base font-bold hover:text-foreground-muted transition-colors"
+                          className="p-0 h-auto text-base font-bold text-foreground"
                         >
                           {query}
-                        </button>
+                        </Button>
                       </li>
                       {/* Unique categories from results */}
-                      {Array.from(new Set(filteredProducts.map((p) => p.category)))
+                      {Array.from(
+                        new Set(filteredProducts.map((p) => p.category))
+                      )
                         .slice(0, 4)
                         .map((category) => (
                           <li key={category}>
-                            <button
+                            <Button
+                              variant="link"
                               onClick={() => handleTermClick(category)}
-                              className="text-base font-medium hover:text-foreground-muted transition-colors capitalize"
+                              className="p-0 h-auto text-base font-medium text-foreground capitalize"
                             >
                               {category}
-                            </button>
+                            </Button>
                           </li>
                         ))}
                     </ul>
@@ -241,6 +251,5 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
         </div>
       </div>
     </>
-  )
+  );
 }
-

@@ -16,7 +16,7 @@ export function CartSummary() {
 
         <div className="flex justify-between">
           <span className="text-foreground-muted">Estimated Shipping</span>
-          <span className="font-medium text-green-600">Free</span>
+          <span className="font-medium text-success">Free</span>
         </div>
 
         <div className="border-t border-border pt-4 mt-4">

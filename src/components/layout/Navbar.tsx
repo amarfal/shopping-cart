@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom"
 import { Search, ShoppingBag, Menu } from "lucide-react"
 import { useCart } from "@/providers/CartProvider"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import { SearchOverlay } from "./SearchOverlay"
 
 export function Navbar() {
@@ -50,12 +51,13 @@ export function Navbar() {
 
           {/* Right Icons */}
           <div className="flex items-center gap-3">
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setIsSearchOpen(true)}
-              className="p-2 rounded-full hover:bg-background-secondary smooth-transition cursor-pointer"
             >
               <Search className="h-5 w-5" />
-            </button>
+            </Button>
             <Link
               to="/cart"
               className="relative p-2 rounded-full hover:bg-background-secondary smooth-transition"
@@ -67,9 +69,13 @@ export function Navbar() {
                 </span>
               )}
             </Link>
-            <button className="p-2 rounded-full hover:bg-background-secondary smooth-transition cursor-pointer md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+            >
               <Menu className="h-5 w-5" />
-            </button>
+            </Button>
           </div>
         </div>
       </nav>

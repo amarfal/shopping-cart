@@ -37,12 +37,14 @@ export function CartItemRow({ item }: CartItemRowProps) {
             </p>
           </div>
 
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => removeItem(product.id)}
-            className="p-1 h-fit text-foreground-muted hover:text-foreground smooth-transition"
+            className="h-8 w-8 text-foreground-muted hover:text-foreground"
           >
             <X className="h-5 w-5" />
-          </button>
+          </Button>
         </div>
 
         {/* Quantity Controls */}
