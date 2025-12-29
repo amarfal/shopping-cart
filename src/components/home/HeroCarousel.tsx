@@ -228,15 +228,23 @@ export function HeroCarousel() {
       {/* Video Controls */}
       <div className="absolute bottom-8 right-8 flex items-center gap-2 z-20">
         {/* Pause/Play with Progress Ring */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={togglePlayPause}
-          className="relative w-11 h-11 bg-white/40 backdrop-blur-sm hover:bg-white/60"
-          aria-label={isPlaying ? "Pause" : "Play"}
-        >
-          {/* Progress Ring SVG */}
-          <svg className="absolute inset-0 w-11 h-11 -rotate-90 z-10">
+        <div className="relative w-11 h-11">
+          {/* Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={togglePlayPause}
+            className="absolute inset-0 w-11 h-11 rounded-full bg-white/40 backdrop-blur-sm hover:bg-white/60 z-0"
+            aria-label={isPlaying ? "Pause" : "Play"}
+          >
+            {isPlaying ? (
+              <Pause className="h-4 w-4 text-white fill-white" />
+            ) : (
+              <Play className="h-4 w-4 text-white fill-white ml-0.5" />
+            )}
+          </Button>
+          {/* Progress Ring SVG - On top */}
+          <svg className="absolute inset-0 w-11 h-11 -rotate-90 pointer-events-none z-10">
             <circle
               cx="22"
               cy="22"
@@ -258,15 +266,7 @@ export function HeroCarousel() {
               className="transition-all duration-100"
             />
           </svg>
-          {/* Icon */}
-          <div className="relative z-20">
-            {isPlaying ? (
-              <Pause className="h-4 w-4 text-white fill-white" />
-            ) : (
-              <Play className="h-4 w-4 text-white fill-white ml-0.5" />
-            )}
-          </div>
-        </Button>
+        </div>
 
         {/* Arrow buttons */}
         <Button

@@ -22,9 +22,9 @@
     color: var(--color-foreground);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500; /* Medium weight for body text */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 }
 
 @layer utilities {
@@ -50,11 +50,11 @@
 
   .bg-primary {
     background-color: var(--color-primary);
-  }
+}
 
   .hover\:bg-primary-hover:hover {
     background-color: var(--color-primary-hover);
-  }
+}
 
   .text-success {
     color: var(--color-success);
@@ -88,7 +88,7 @@
 
   .heading-md {
     font-size: clamp(1.5rem, 3vw, 2rem);
-  }
+}
 
   /* Subtle scale for hover effects */
   .scale-102 {
@@ -149,7 +149,7 @@
     }
     to {
       height: 0;
-    }
+  }
   }
 }
 
