@@ -23,7 +23,7 @@ export function Home() {
           {/* Content - Bottom left like Nike */}
           <div className="absolute bottom-12 left-8 text-white">
             <p className="text-sm font-semibold mb-1 opacity-80">Cleats</p>
-            <h3 className="heading-display text-3xl md:text-4xl mb-4 text-red-600">
+            <h3 className="heading-display text-3xl md:text-4xl mb-4">
               CONQUER THE FIELD
             </h3>
             <Link to="/shop">
