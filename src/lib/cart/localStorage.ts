@@ -1,10 +1,9 @@
-import type { CartItem } from "@/types";
-
-const CART_STORAGE_KEY = "sike-cart";
+import type { CartItem } from "@/types"
+import { STORAGE_KEYS } from "@/lib/constants"
 
 export function loadCart() {
   try {
-    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    const stored = localStorage.getItem(STORAGE_KEYS.CART)
     return stored ? (JSON.parse(stored) as CartItem[]) : [];
   } catch {
     return [];
@@ -12,5 +11,5 @@ export function loadCart() {
 }
 
 export function saveCart(items: CartItem[]) {
-  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(items))
 }

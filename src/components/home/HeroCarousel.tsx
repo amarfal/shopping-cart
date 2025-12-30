@@ -1,19 +1,18 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
-import { cn } from "@/lib/utils";
-import { Play, Pause, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react"
+import { Link } from "react-router-dom"
+import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
+import { cn } from "@/lib/utils"
+import { CAROUSEL } from "@/lib/constants"
+import { Play, Pause, ChevronLeft, ChevronRight } from "lucide-react"
 
 interface Slide {
-  videoId: string;
-  title: string;
-  subtitle: string;
+  videoId: string
+  title: string
+  subtitle: string
 }
 
-const PLAYBACK_DURATION = 12; // seconds to show each video
-const START_OFFSET = 3; // seconds into video to start
-const TRANSITION_DURATION = 300; // Faster transitions
+const { PLAYBACK_DURATION, START_OFFSET, TRANSITION_DURATION } = CAROUSEL
 
 const SLIDES: Slide[] = [
   {
@@ -187,7 +186,7 @@ export function HeroCarousel() {
       )}
 
       {/* Hero Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white px-4">
+      <div className="relative z-10 flex h-full flex-col items-center justify-end pb-32 text-center text-white px-4">
         <h1 className="heading-display text-[4rem] md:text-[6rem] lg:text-[8rem] mb-4 drop-shadow-lg tracking-wide">
           {currentVideo.title}
         </h1>
@@ -200,15 +199,21 @@ export function HeroCarousel() {
               Shop
             </Button>
           </Link>
-          <Button variant="inverse" size="lg">
-            <Play className="h-4 w-4 mr-1 fill-current" />
-            Watch
-          </Button>
+          <a
+            href={`https://www.youtube.com/watch?v=${currentVideo.videoId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="inverse" size="lg">
+              <Play className="h-4 w-4 mr-1 fill-current" />
+              Watch
+            </Button>
+          </a>
         </div>
       </div>
 
       {/* Carousel Dots */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+      <div className="absolute bottom-24 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
         {SLIDES.map((_, index) => (
           <Button
             key={index}
@@ -234,7 +239,7 @@ export function HeroCarousel() {
             variant="ghost"
             size="icon"
             onClick={togglePlayPause}
-            className="absolute inset-0 w-11 h-11 rounded-full bg-white/40 backdrop-blur-sm hover:bg-white/60 z-0"
+            className="absolute inset-0 w-11 h-11 rounded-full bg-white/40 backdrop-blur-xs hover:bg-white/60 z-0"
             aria-label={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? (
@@ -273,7 +278,7 @@ export function HeroCarousel() {
           variant="ghost"
           size="icon"
           onClick={goToPrevSlide}
-          className="w-11 h-11 bg-white/40 backdrop-blur-sm hover:bg-white/60"
+          className="w-11 h-11 bg-white/40 backdrop-blur-xs hover:bg-white/60"
           aria-label="Previous slide"
         >
           <ChevronLeft className="h-5 w-5 text-white" />
@@ -282,7 +287,7 @@ export function HeroCarousel() {
           variant="ghost"
           size="icon"
           onClick={goToNextSlide}
-          className="w-11 h-11 bg-white/40 backdrop-blur-sm hover:bg-white/60"
+          className="w-11 h-11 bg-white/40 backdrop-blur-xs hover:bg-white/60"
           aria-label="Next slide"
         >
           <ChevronRight className="h-5 w-5 text-white" />

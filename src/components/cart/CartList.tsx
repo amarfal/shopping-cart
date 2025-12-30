@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useCart } from "@/providers/CartProvider"
+import { useCart } from "@/hooks/useCart"
 import { CartItemRow } from "./CartItemRow"
 import { Button } from "@/components/ui/button"
 import { ShoppingBag } from "lucide-react"

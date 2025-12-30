@@ -3,8 +3,13 @@ export interface Product {
   title: string
   price: number
   description: string
-  category: string
+  category: "shoes" | "clothing" | "accessories"
+  subcategory?: string
   image: string
+  images?: string[]
+  sizes?: string[]
+  colors?: string[]
+  rating?: { rate: number; count: number }
 }
 
 export interface CartItem {

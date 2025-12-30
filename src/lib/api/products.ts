@@ -1,20 +1,10 @@
 import type { Product } from "@/types"
+import { products } from "@/lib/data/products"
 
-const API_URL = "https://fakestoreapi.com/products"
-
-let cachedProducts: Product[] | null = null
-
-async function fetchProducts() {
-  const response = await fetch(API_URL)
-  if (!response.ok) {
-    throw new Error("Failed to fetch products")
-  }
-  return response.json() as Promise<Product[]>
+export function getProducts(): Promise<Product[]> {
+  return Promise.resolve(products)
 }
 
-export async function getProducts() {
-  if (cachedProducts) return cachedProducts
-  cachedProducts = await fetchProducts()
-  return cachedProducts
+export function getProductById(id: number): Promise<Product | undefined> {
+  return Promise.resolve(products.find((p) => p.id === id))
 }
-

@@ -1,6 +1,23 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
+import { products } from "@/lib/data/products";
+
+// Featured products for spotlight (mix of categories)
+const SPOTLIGHT_PRODUCTS = [
+  products[3], // Air Jordan 1 Mid
+  products[0], // Air Max Pulse
+  products[11], // Sportswear Club Tee
+  products[2], // Dunk Low Retro
+  products[4], // Air Force 1 '07
+  products[20], // Brasilia Backpack
+  products[1], // Pegasus 41
+  products[6], // Blazer Mid '77
+  products[14], // Tech Fleece Joggers
+  products[21], // Heritage Cap
+  products[10], // Tech Fleece Hoodie
+  products[8], // Metcon 9
+];
 
 export function Home() {
   return (
@@ -39,7 +56,7 @@ export function Home() {
           <img
             src="/ad2.jpg"
             alt="Featured Collection 2"
-            className="absolute inset-0 w-full h-full object-cover object-[25%_center]"
+            className="absolute inset-0 w-full h-full object-cover object-[40%_center] md:object-[25%_center]"
           />
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent" />
@@ -65,13 +82,41 @@ export function Home() {
           <h2 className="heading-display text-4xl md:text-5xl mb-4">
             SPOTLIGHT
           </h2>
-          <p className="text-foreground-muted max-w-2xl mx-auto mb-8">
+          <p className="text-foreground-muted max-w-2xl mx-auto mb-12">
             Classic silhouettes and cutting-edge innovation to build your game
             from the ground up.
           </p>
-          <Link to="/shop">
-            <Button size="lg">Shop All</Button>
-          </Link>
+
+          {/* Product Grid */}
+          <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-6 gap-6 mb-12">
+            {SPOTLIGHT_PRODUCTS.map((product) => (
+              <Link
+                key={product.id}
+                to={`/shop/${product.id}`}
+                className="group flex flex-col items-center"
+              >
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-background-secondary overflow-hidden mb-2">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="text-xs sm:text-sm font-medium text-center line-clamp-2 group-hover:text-foreground-muted transition-colors">
+                  {product.title}
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          {/* Logo */}
+          <div className="mb-8">
+            <img
+              src="/sike-logo-removebg-preview.png"
+              alt="Sike"
+              className="h-20 w-20 mx-auto object-cover"
+            />
+          </div>
         </div>
       </section>
     </div>

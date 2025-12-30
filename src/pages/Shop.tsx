@@ -1,17 +1,19 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
+import { useSearchParams } from "react-router-dom"
 import type { Product } from "@/types"
 import { getProducts } from "@/lib/api/products"
 import { ProductGrid } from "@/components/shop/ProductGrid"
-import { ProductQuickViewDialog } from "@/components/shop/ProductQuickViewDialog"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
 
 export function Shop() {
+  const [searchParams] = useSearchParams()
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-  const [dialogOpen, setDialogOpen] = useState(false)
+
+  const category = searchParams.get("category")
+  const subcategory = searchParams.get("sub")
 
   useEffect(() => {
     let ignore = false
@@ -41,9 +43,30 @@ export function Shop() {
     }
   }, [])
 
-  const handleProductClick = (product: Product) => {
-    setSelectedProduct(product)
-    setDialogOpen(true)
+  // Filter products based on URL params
+  const filteredProducts = useMemo(() => {
+    let result = products
+
+    if (category) {
+      result = result.filter((p) => p.category === category)
+    }
+
+    if (subcategory) {
+      result = result.filter((p) => p.subcategory === subcategory)
+    }
+
+    return result
+  }, [products, category, subcategory])
+
+  // Generate page title
+  const getPageTitle = () => {
+    if (subcategory) {
+      return subcategory.toUpperCase()
+    }
+    if (category) {
+      return category.toUpperCase()
+    }
+    return "ALL PRODUCTS"
   }
 
   const handleRetry = () => {
@@ -63,9 +86,9 @@ export function Shop() {
       {/* Header */}
       <div className="border-b border-border">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <h1 className="heading-display heading-md">All Products</h1>
+          <h1 className="heading-display heading-md">{getPageTitle()}</h1>
           <p className="mt-2 text-foreground-muted">
-            {!loading && !error && `${products.length} products`}
+            {!loading && !error && `${filteredProducts.length} products`}
           </p>
         </div>
       </div>
@@ -91,16 +114,16 @@ export function Shop() {
           </div>
         )}
 
-        {!loading && !error && products.length > 0 && (
-          <ProductGrid products={products} onProductClick={handleProductClick} />
+        {!loading && !error && filteredProducts.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-24">
+            <p className="text-lg text-foreground-muted">No products found</p>
+          </div>
+        )}
+
+        {!loading && !error && filteredProducts.length > 0 && (
+          <ProductGrid products={filteredProducts} />
         )}
       </div>
-
-      <ProductQuickViewDialog
-        product={selectedProduct}
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-      />
     </div>
   )
 }

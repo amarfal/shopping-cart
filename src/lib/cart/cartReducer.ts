@@ -1,6 +1,5 @@
 import type { CartItem, CartAction } from "@/types"
-
-const MAX_QUANTITY = 10
+import { MAX_CART_QUANTITY } from "@/lib/constants"
 
 export function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
   switch (action.type) {
@@ -9,7 +8,7 @@ export function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
       if (existing) {
         return state.map((item) =>
           item.product.id === action.product.id
-            ? { ...item, quantity: Math.min(item.quantity + 1, MAX_QUANTITY) }
+            ? { ...item, quantity: Math.min(item.quantity + 1, MAX_CART_QUANTITY) }
             : item
         )
       }
@@ -19,7 +18,7 @@ export function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
     case "INCREMENT_ITEM": {
       return state.map((item) =>
         item.product.id === action.productId
-          ? { ...item, quantity: Math.min(item.quantity + 1, MAX_QUANTITY) }
+          ? { ...item, quantity: Math.min(item.quantity + 1, MAX_CART_QUANTITY) }
           : item
       )
     }
