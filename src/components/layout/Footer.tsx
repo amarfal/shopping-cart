@@ -1,18 +1,18 @@
-import { Link } from "react-router-dom"
-import { SHOP_MENU } from "@/lib/data/products"
+import { Link } from "react-router-dom";
+import { SHOP_MENU } from "@/lib/data/products";
 
 const HELP_LINKS = [
   { label: "Order Status", href: "#" },
   { label: "Shipping & Delivery", href: "#" },
   { label: "Returns", href: "#" },
   { label: "Contact Us", href: "#" },
-]
+];
 
 const ABOUT_LINKS = [
   { label: "About Sike", href: "#" },
   { label: "Careers", href: "#" },
   { label: "Sustainability", href: "#" },
-]
+];
 
 export function Footer() {
   return (
@@ -101,7 +101,9 @@ export function Footer() {
                 alt="Sike"
                 className="h-10 w-10 invert"
               />
-              <span className="heading-display text-2xl tracking-wide">Sike</span>
+              <span className="heading-display text-2xl tracking-wide">
+                Sike
+              </span>
             </Link>
             <p className="text-sm text-background/70 max-w-xs">
               Empowering athletes everywhere. Just did it.
@@ -127,6 +129,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
-
