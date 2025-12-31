@@ -24,3 +24,6 @@ export const CAROUSEL = {
   TRANSITION_DURATION: 300,
 } as const
 
+
+
+

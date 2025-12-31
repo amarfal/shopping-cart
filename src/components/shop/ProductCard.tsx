@@ -16,7 +16,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <img
             src={product.image}
             alt={product.title}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full object-cover"
           />
         </div>
 
@@ -25,7 +25,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <p className="text-sm text-foreground-muted font-medium">
             {categoryLabel}
           </p>
-          <h3 className="font-semibold line-clamp-2 group-hover:text-foreground-muted transition-colors duration-200">
+          <h3 className="font-semibold line-clamp-2 group-hover:text-foreground-muted transition-colors">
             {product.title}
           </h3>
           <p className="font-semibold">${product.price.toFixed(2)}</p>
