@@ -1,6 +1,6 @@
 # Sike - Nike-Style Shopping Cart
 
-A modern e-commerce shopping cart experience inspired by Nike.com, built with React 19, TypeScript, and Tailwind CSS. :O
+A modern e-commerce shopping cart experience inspired by Nike.com, built with React 19, TypeScript, and Tailwind CSS. :d
 
 ## ✨ Features
 
